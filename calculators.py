@@ -13,6 +13,26 @@ def calculate_per():
     except ValueError:
         data_listbox.insert(tk.END, "Invalid input")
 
+def calculate_insertion_loss():
+    try:
+        il_max = float(entry1.get())
+        il_min = float(entry2.get())
+        result = 10*(math.log10(il_max/il_min))
+        data_listbox.insert(tk.END, f"Insertion Loss: {result}")
+        messagebox.showinfo("Insertion Loss", f"Insertion Loss: {result:.4f}")
+    except ValueError:
+        data_listbox.insert(tk.END, "Invalid input")
+
+def calculate_return_loss():
+    try:
+        rl_in = float(entry1.get())
+        rl_out = float(entry2.get())
+        result = 10*(math.log10(rl_out/rl_in))
+        data_listbox.insert(tk.END, f"Return Loss: {result}")
+        messagebox.showinfo("Return Loss", f"Return Loss: {result:.4f}")
+    except ValueError:
+        data_listbox.insert(tk.END, "Invalid input")
+
 def calculate_mrad():
     try:
         x1 = float(x1_entry.get())
@@ -39,50 +59,84 @@ def clear_data():
 # Create the main application window
 root = tk.Tk()
 root.title("Beam Data Collection App")
-root.geometry("800x800")
+root.geometry("600x800")
 
-# Create a frame for the PER and mRad calculations
+# Create a frame for the calculations
 data_frame = tk.Frame(root)
-data_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+data_frame.pack(fill=tk.BOTH, expand=False, padx=10, pady=10)
 data_listbox = tk.Listbox(data_frame, height=10, width=80)
-data_listbox.pack(fill=tk.BOTH, expand=True)
+data_listbox.pack(fill=tk.BOTH, expand=False)
+
+# Frame for PER, IL and RL calculation
+calc_frame = tk.Frame(root)
+calc_frame.pack(pady=(10))
 
 # Inputs for the PER calculation
-tk.Label(root, text="Enter PER max (uW):").pack(pady=(10, 0))
-entry1 = tk.Entry(root)
-entry1.pack(pady=5)
+tk.Label(calc_frame, text="Enter PER max (uW):").grid(row=0, column=0, padx=10)
+entry1 = tk.Entry(calc_frame)
+entry1.grid(row=1, column=0, pady=5)
 
-tk.Label(root, text="Enter PER min (uW):").pack(pady=(10, 0))
-entry2 = tk.Entry(root)
-entry2.pack(pady=5)
+tk.Label(calc_frame, text="Enter PER min (uW):").grid(row=2, column=0, padx=10)
+entry2 = tk.Entry(calc_frame)
+entry2.grid(row=3, column=0, pady=10)
+
 # Button to calculate the PER
-tk.Button(root, text="Calculate PER", command=calculate_per).pack(pady=10)
+tk.Button(calc_frame, text="Calculate PER", command=calculate_per).grid(row=4, column=0, padx=10, pady=5)
+
+# Inputs for the Insertion Loss calculation
+tk.Label(calc_frame, text="Enter IL in (mW):").grid(row=0, column=1, padx=10)
+entry1 = tk.Entry(calc_frame)
+entry1.grid(row=1, column=1, pady=5)
+
+tk.Label(calc_frame, text="Enter IL out (mW):").grid(row=2, column=1, padx=10)
+entry2 = tk.Entry(calc_frame)
+entry2.grid(row=3, column=1, padx=10)
+
+# Button to calculate the IL
+
+tk.Button(calc_frame, text="Calculate IL", command=calculate_insertion_loss).grid(row=4, column=1, padx=10, pady=5)
+
+#Inputs for the RL calculation
+tk.Label(calc_frame, text="Enter RL in (uW):").grid(row=0, column=2, padx=10)
+entry1 = tk.Entry(calc_frame)
+entry1.grid(row=1, column=2, padx=10)
+
+tk.Label(calc_frame, text="Enter RL out (uW):").grid(row=2, column=2, padx=10)
+entry2 = tk.Entry(calc_frame)
+entry2.grid(row=3, column=2, padx=10)
+
+# Button to calculate the RL
+
+tk.Button(calc_frame, text="Calculate RL", command=calculate_return_loss).grid(row=4, column=2, padx=10, pady=5)
+
+# Frame for mRad calculation
+mrad_frame = tk.Frame(root)
+mrad_frame.pack(padx=10, pady=10)
 
 ## Inputs for the mRad calculation
-tk.Label(root, text="Enter x1 (μm):").pack(pady=(10, 0))
-x1_entry = tk.Entry(root)
-x1_entry.pack(pady=5)
+tk.Label(mrad_frame, text="Enter x1 (μm):").grid(row=0, column=0, padx=5, pady=5)
+x1_entry = tk.Entry(mrad_frame)
+x1_entry.grid(row=0, column=1, padx=5, pady=5)
 
-tk.Label(root, text="Enter y1 (μm):").pack(pady=(10, 0))
-y1_entry = tk.Entry(root)
-y1_entry.pack(pady=5)
+tk.Label(mrad_frame, text="Enter y1 (μm):").grid(row=0, column=2, padx=5, pady=5)
+y1_entry = tk.Entry(mrad_frame)
+y1_entry.grid(row=0, column=3, padx=5, pady=5)
 
-tk.Label(root, text="Enter x2 (μm):").pack(pady=(10, 0))
-x2_entry = tk.Entry(root)
-x2_entry.pack(pady=5)
+tk.Label(mrad_frame, text="Enter x2 (μm):").grid(row=1, column=0, padx=5, pady=5)
+x2_entry = tk.Entry(mrad_frame)
+x2_entry.grid(row=1, column=1, padx=5, pady=5)
 
-tk.Label(root, text="Enter y2 (μm):").pack(pady=(10, 0))
-y2_entry = tk.Entry(root)
-y2_entry.pack(pady=5)
-
+tk.Label(mrad_frame, text="Enter y2 (μm):").grid(row=1, column=2, padx=5, pady=5)
+y2_entry = tk.Entry(mrad_frame)
+y2_entry.grid(row=1, column=3, padx=5, pady=5)
 # Distance in millimeters
-tk.Label(root, text="Distance (mm):").pack(pady=(10, 0))
-distance_entry = tk.Entry(root)
-distance_entry.pack(pady=5)
+tk.Label(mrad_frame, text="Distance (mm):").grid(row=2, column=0, padx=5, pady=5)
+distance_entry = tk.Entry(mrad_frame)
+distance_entry.grid(row=2, column=1, padx=5, pady=5)
 
 # Button to calculate the mRad
 
-tk.Button(root, text="Calculate mRad", command=calculate_mrad).pack(pady=10)
+tk.Button(mrad_frame, text="Calculate mRad", command=calculate_mrad).grid(row=2, column=2, padx=5, pady=5)
 
 # Buttons for clearing the data
 tk.Button(root, text="Clear Data", command=clear_data).pack(pady=5)
