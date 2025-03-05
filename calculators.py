@@ -5,8 +5,8 @@ import math
 
 def calculate_per():
     try:
-        per_max = float(entry1.get())
-        per_min = float(entry2.get())
+        per_max = float(per_max_entry.get())
+        per_min = float(per_min_entry.get())
         result = 10*(math.log10(per_max/per_min))
         data_listbox.insert(tk.END, f"PER: {result}")
         messagebox.showinfo("PER", f"PER: {result:.4f}")
@@ -15,9 +15,9 @@ def calculate_per():
 
 def calculate_insertion_loss():
     try:
-        il_max = float(entry1.get())
-        il_min = float(entry2.get())
-        result = 10*(math.log10(il_max/il_min))
+        il_input = float(il_input_entry.get())
+        il_output = float(il_output_entry.get())
+        result = 10*(math.log10(il_input/il_output))
         data_listbox.insert(tk.END, f"Insertion Loss: {result}")
         messagebox.showinfo("Insertion Loss", f"Insertion Loss: {result:.4f}")
     except ValueError:
@@ -25,9 +25,9 @@ def calculate_insertion_loss():
 
 def calculate_return_loss():
     try:
-        rl_in = float(entry1.get())
-        rl_out = float(entry2.get())
-        result = 10*(math.log10(rl_out/rl_in))
+        rl_input = float(rl_input_entry.get())
+        rl_output = float(rl_output_entry.get())
+        result = 10*(math.log10(rl_output/rl_input))
         data_listbox.insert(tk.END, f"Return Loss: {result}")
         messagebox.showinfo("Return Loss", f"Return Loss: {result:.4f}")
     except ValueError:
@@ -73,37 +73,37 @@ calc_frame.pack(pady=(10))
 
 # Inputs for the PER calculation
 tk.Label(calc_frame, text="Enter PER max (uW):").grid(row=0, column=0, padx=10)
-entry1 = tk.Entry(calc_frame)
-entry1.grid(row=1, column=0, pady=5)
+per_max_entry = tk.Entry(calc_frame)
+per_max_entry.grid(row=1, column=0, pady=5)
 
 tk.Label(calc_frame, text="Enter PER min (uW):").grid(row=2, column=0, padx=10)
-entry2 = tk.Entry(calc_frame)
-entry2.grid(row=3, column=0, pady=10)
+per_min_entry = tk.Entry(calc_frame)
+per_min_entry.grid(row=3, column=0, pady=10)
 
 # Button to calculate the PER
 tk.Button(calc_frame, text="Calculate PER", command=calculate_per).grid(row=4, column=0, padx=10, pady=5)
 
 # Inputs for the Insertion Loss calculation
 tk.Label(calc_frame, text="Enter IL in (mW):").grid(row=0, column=1, padx=10)
-entry1 = tk.Entry(calc_frame)
-entry1.grid(row=1, column=1, pady=5)
+il_input_entry = tk.Entry(calc_frame)
+il_input_entry.grid(row=1, column=1, pady=5)
 
 tk.Label(calc_frame, text="Enter IL out (mW):").grid(row=2, column=1, padx=10)
-entry2 = tk.Entry(calc_frame)
-entry2.grid(row=3, column=1, padx=10)
+il_output_entry = tk.Entry(calc_frame)
+il_output_entry.grid(row=3, column=1, padx=10)
 
-# Button to calculate the IL
+# Button to calculate the Insertion Loss
 
 tk.Button(calc_frame, text="Calculate IL", command=calculate_insertion_loss).grid(row=4, column=1, padx=10, pady=5)
 
 #Inputs for the RL calculation
-tk.Label(calc_frame, text="Enter RL in (uW):").grid(row=0, column=2, padx=10)
-entry1 = tk.Entry(calc_frame)
-entry1.grid(row=1, column=2, padx=10)
+tk.Label(calc_frame, text="Enter RL in (mW):").grid(row=0, column=2, padx=10)
+rl_input_entry = tk.Entry(calc_frame)
+rl_input_entry.grid(row=1, column=2, padx=10)
 
 tk.Label(calc_frame, text="Enter RL out (uW):").grid(row=2, column=2, padx=10)
-entry2 = tk.Entry(calc_frame)
-entry2.grid(row=3, column=2, padx=10)
+rl_output_entry= tk.Entry(calc_frame)
+rl_output_entry.grid(row=3, column=2, padx=10)
 
 # Button to calculate the RL
 
