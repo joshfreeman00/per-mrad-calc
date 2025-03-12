@@ -27,7 +27,7 @@ def calculate_return_loss():
     try:
         rl_input = float(rl_input_entry.get())
         rl_output = float(rl_output_entry.get())
-        result = 10*(math.log10(rl_output/rl_input))
+        result = 10*(math.log10(rl_input ** -3 / rl_output ** -9))
         data_listbox.insert(tk.END, f"Return Loss: {result}")
         messagebox.showinfo("Return Loss", f"Return Loss: {result:.4f}")
     except ValueError:
@@ -72,11 +72,11 @@ calc_frame = tk.Frame(root)
 calc_frame.pack(pady=(10))
 
 # Inputs for the PER calculation
-tk.Label(calc_frame, text="Enter PER max (uW):").grid(row=0, column=0, padx=10)
+tk.Label(calc_frame, text="Enter PER max (μW):").grid(row=0, column=0, padx=10)
 per_max_entry = tk.Entry(calc_frame)
 per_max_entry.grid(row=1, column=0, pady=5)
 
-tk.Label(calc_frame, text="Enter PER min (uW):").grid(row=2, column=0, padx=10)
+tk.Label(calc_frame, text="Enter PER min (μW):").grid(row=2, column=0, padx=10)
 per_min_entry = tk.Entry(calc_frame)
 per_min_entry.grid(row=3, column=0, pady=10)
 
@@ -97,11 +97,11 @@ il_output_entry.grid(row=3, column=1, padx=10)
 tk.Button(calc_frame, text="Calculate IL", command=calculate_insertion_loss).grid(row=4, column=1, padx=10, pady=5)
 
 #Inputs for the RL calculation
-tk.Label(calc_frame, text="Enter RL in (mW):").grid(row=0, column=2, padx=10)
+tk.Label(calc_frame, text="Enter RL in (μW):").grid(row=0, column=2, padx=10)
 rl_input_entry = tk.Entry(calc_frame)
 rl_input_entry.grid(row=1, column=2, padx=10)
 
-tk.Label(calc_frame, text="Enter RL out (uW):").grid(row=2, column=2, padx=10)
+tk.Label(calc_frame, text="Enter RL out (nW):").grid(row=2, column=2, padx=10)
 rl_output_entry= tk.Entry(calc_frame)
 rl_output_entry.grid(row=3, column=2, padx=10)
 
